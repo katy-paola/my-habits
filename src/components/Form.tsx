@@ -6,8 +6,11 @@ interface Habit {
 }
 
 export default function Form() {
-  const [habit, setHabit] = useState<string>("");
+  const [habit, setHabit] = useState("");
   const [habits, setHabits] = useState([] as Habit[]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+const [habitToEdit, setHabitToEdit] = useState("");
+
 const [placeholder, setPlaceholder] = useState<string>("Drink water");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,6 +33,19 @@ const [placeholder, setPlaceholder] = useState<string>("Drink water");
     setHabit("");
   };
 
+  const updateHabit = (id: number) => {
+    const habit = habits.find((habit) => habit.id === id)?.title;
+    if(habit){
+      setHabitToEdit(habit);
+    }
+    
+    setIsModalOpen(true);
+  };
+
+  const deleteHabit = () => {
+    alert("Delete habit");
+  }
+
   return (
     <section className="flex flex-col gap-8">
       <form className="flex flex-col gap-4" onSubmit={createHabit}>
@@ -51,7 +67,7 @@ const [placeholder, setPlaceholder] = useState<string>("Drink water");
         {habits.length > 0 &&
           habits.map((habit, _) => (
             <li key={habit.id} className="bg-purple-200 text-neutral-800 rounded-lg overflow-hidden">
-              <Habit title={habit.title} />
+              <Habit title={habit.title} updateHabit={() => {updateHabit(habit.id)}} deleteHabit={deleteHabit}/>
             </li>
           ))}
       </ul>

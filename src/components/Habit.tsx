@@ -3,10 +3,14 @@ export default function Habit({
   title,
   body,
   href,
+  updateHabit,
+  deleteHabit,
 }: {
   title: string;
   body?: string;
   href?: string;
+  updateHabit: () => void;
+  deleteHabit: () => void;
 }) {
   
 
@@ -18,8 +22,8 @@ export default function Habit({
       {body && <p>{body}</p>}
       {href && <a href={href}>Read more</a>}
       <section className="flex gap-2 text-sm sm:items-center w-full sm:w-auto">
-        <button className="bg-purple-400 px-4 py-2 flex-1">Edit</button>
-        <button className="bg-rose-400 px-4 py-2 flex-1">Delete</button>
+        <button className="bg-purple-400 px-4 py-2 flex-1" onClick={updateHabit}>Edit</button>
+        <button className="bg-rose-400 px-4 py-2 flex-1" onClick={deleteHabit}>Delete</button>
       </section>
     </article>
   );
